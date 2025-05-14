@@ -1,0 +1,9 @@
+POST localhost:8080/schedules
+Content-Type: application/json
+
+{
+  "content": "안녕하세요"
+}
+
+###
+GET localhost:8080/schedules/1
