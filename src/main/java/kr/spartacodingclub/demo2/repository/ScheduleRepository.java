@@ -35,4 +35,10 @@ public interface ScheduleRepository {
 
   List<Schedule> findAll();
 
+  void delete(Schedule schedule);
+
+  default Schedule findScheduleById(Long id) {
+    return findById(id)
+            .orElseThrow(() -> new RuntimeException("Schedule not found"));
+  }
 }

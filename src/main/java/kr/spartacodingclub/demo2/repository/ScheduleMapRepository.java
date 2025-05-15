@@ -13,10 +13,7 @@ package kr.spartacodingclub.demo2.repository;
 import kr.spartacodingclub.demo2.entity.Schedule;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -41,7 +38,9 @@ public class ScheduleMapRepository implements ScheduleRepository {
 
   @Override
   public Schedule save(Schedule schedule) {
-    schedule.setId(lastId.incrementAndGet()); // 1 증가시키고 값을 가져옴.
+    if (schedule.getId() == null) {
+      schedule.setId(lastId.incrementAndGet()); // 1 증가시키고 값을 가져옴.
+    }
     scheduleMap.put(schedule.getId(), schedule);
     return schedule;
   }
@@ -54,6 +53,25 @@ public class ScheduleMapRepository implements ScheduleRepository {
 
   @Override
   public List<Schedule> findAll() {
-    return List.of();
+//    for (Long key : scheduleMap.keySet()) {
+//      Schedule schedule = scheduleMap.get(key);
+//    }
+
+    return scheduleMap.values()
+            .stream()
+            .toList();
   }
+
+  @Override
+  public void delete(Schedule schedule) {
+    scheduleMap.remove(schedule.getId());
+  }
+
+//  @Override
+//  public void deleteById(Long id) {
+//    if (!scheduleMap.containsKey(id)) {
+//      throw new RuntimeException("없습니다.");
+//    }
+//    scheduleMap.remove(id);
+//  }
 }

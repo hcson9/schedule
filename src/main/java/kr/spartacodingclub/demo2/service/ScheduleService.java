@@ -17,6 +17,9 @@ import kr.spartacodingclub.demo2.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * create on 2025. 5. 14. create by IntelliJ IDEA.
  * create by IntelliJ IDEA.
@@ -50,9 +53,44 @@ public class ScheduleService {
   }
 
   public ScheduleResponse findById(Long id) {
-    Schedule schedule = scheduleRepository.findById(id)
-            .orElseThrow();
+    Schedule schedule = scheduleRepository.findScheduleById(id);
 
+    return new ScheduleResponse(schedule.getId(),
+            schedule.getContent(),
+            schedule.getCreatedAt());
+  }
+
+  public List<ScheduleResponse> findAll() {
+    List<Schedule> schedules = scheduleRepository.findAll();
+    List<ScheduleResponse> scheduleResponses = new ArrayList<>();
+
+    for(Schedule schedule : schedules) {
+      scheduleResponses.add(new ScheduleResponse(schedule.getId(),
+              schedule.getContent(),
+              schedule.getCreatedAt()));
+    }
+
+    return scheduleResponses;
+//    return schedules.stream()
+//            .map(schedule -> new ScheduleResponse(schedule.getId(), schedule.getContent(), schedule.getCreatedAt()))
+//            .toList();
+  }
+
+  public void deleteById(Long id) {
+    Schedule schedule = scheduleRepository.findScheduleById(id);
+    scheduleRepository.delete(schedule);
+  }
+
+//  private Schedule findScheduleById(Long id) {
+//    return scheduleRepository.findById(id)
+//            .orElseThrow(() -> new RuntimeException("schedule not found"));
+//  }
+
+  public ScheduleResponse update(Long id, String content) {
+    Schedule schedule = scheduleRepository.findById(id)
+                    .orElseThrow();
+    schedule.update(content);
+    scheduleRepository.save(schedule);
     return new ScheduleResponse(schedule.getId(),
             schedule.getContent(),
             schedule.getCreatedAt());

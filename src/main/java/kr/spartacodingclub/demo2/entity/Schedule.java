@@ -35,10 +35,16 @@ public class Schedule {
 
   private String content;
 
+  private String name;
+
   private LocalDateTime createdAt;
 
   public Schedule(String content) {
     this.content = content;
     this.createdAt = LocalDateTime.now();
+  }
+
+  public void update(String content) {
+    this.content = content;
   }
 }

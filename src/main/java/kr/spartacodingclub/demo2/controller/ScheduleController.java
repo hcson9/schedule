@@ -10,14 +10,18 @@
 
 package kr.spartacodingclub.demo2.controller;
 
+import jakarta.servlet.ServletRequest;
 import kr.spartacodingclub.demo2.dto.ScheduleRequest;
 import kr.spartacodingclub.demo2.dto.ScheduleResponse;
 import kr.spartacodingclub.demo2.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * create on 2025. 5. 14. create by IntelliJ IDEA.
@@ -37,7 +41,6 @@ import org.springframework.web.bind.annotation.*;
 public class ScheduleController {
   private final ScheduleService scheduleService;
 
-
   @PostMapping
   public ResponseEntity<ScheduleResponse> createSchedule(@RequestBody ScheduleRequest scheduleRequest) {
     ScheduleResponse response = scheduleService.save(scheduleRequest.getContent());
@@ -49,5 +52,22 @@ public class ScheduleController {
   public ResponseEntity<ScheduleResponse> findById(@PathVariable Long id) {
     ScheduleResponse response = scheduleService.findById(id);
     return ResponseEntity.ok(response);
+  }
+
+  @GetMapping
+  public ResponseEntity<List<ScheduleResponse>> findAll() {
+    return ResponseEntity.ok(scheduleService.findAll());
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<String> deleteById(@PathVariable Long id) {
+    scheduleService.deleteById(id);
+    return ResponseEntity.ok("Success");
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<ScheduleResponse> updateById(@PathVariable Long id,
+                                                     @RequestBody ScheduleRequest scheduleRequest) {
+    return ResponseEntity.ok(scheduleService.update(id, scheduleRequest.getContent()));
   }
 }

@@ -10,6 +10,9 @@
 
 package kr.spartacodingclub.demo2.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 /**
@@ -27,4 +30,9 @@ import lombok.Getter;
 @Getter
 public class ScheduleRequest {
   private String content;
+
+  @JsonCreator
+  public ScheduleRequest(String content, String name) {
+    this.content = content;
+  }
 }
