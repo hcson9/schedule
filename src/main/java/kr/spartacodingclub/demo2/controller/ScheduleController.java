@@ -41,6 +41,7 @@ import java.util.List;
 public class ScheduleController {
   private final ScheduleService scheduleService;
 
+  // 등록
   @PostMapping
   public ResponseEntity<ScheduleResponse> createSchedule(@RequestBody ScheduleRequest scheduleRequest) {
     ScheduleResponse response = scheduleService.save(scheduleRequest.getContent());
@@ -48,23 +49,27 @@ public class ScheduleController {
             .body(response);
   }
 
+  // id 조회
   @GetMapping("/{id}")
   public ResponseEntity<ScheduleResponse> findById(@PathVariable Long id) {
     ScheduleResponse response = scheduleService.findById(id);
     return ResponseEntity.ok(response);
   }
 
+  // 전체 조회
   @GetMapping
   public ResponseEntity<List<ScheduleResponse>> findAll() {
     return ResponseEntity.ok(scheduleService.findAll());
   }
 
+  // 삭제
   @DeleteMapping("/{id}")
   public ResponseEntity<String> deleteById(@PathVariable Long id) {
     scheduleService.deleteById(id);
     return ResponseEntity.ok("Success");
   }
 
+  // 전체 수정
   @PutMapping("/{id}")
   public ResponseEntity<ScheduleResponse> updateById(@PathVariable Long id,
                                                      @RequestBody ScheduleRequest scheduleRequest) {

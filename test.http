@@ -21,3 +21,12 @@ Content-Type: application/json
 {
   "content": "안녕하세요2"
 }
+
+### Comment 생성
+POST localhost:8080/comments
+Content-Type: application/json
+
+{
+  "content": "123",
+  "scheduleId": 2
+}
