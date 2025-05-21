@@ -15,7 +15,9 @@ import kr.spartacodingclub.demo2.dto.ScheduleResponse;
 import kr.spartacodingclub.demo2.entity.Schedule;
 import kr.spartacodingclub.demo2.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +36,15 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
+@Transactional(readOnly = true)
 public class ScheduleService {
   private final ScheduleRepository scheduleRepository;
 
   // 1. 외부에서 데이터를 받아서
   // 2. Schedule 생성해서
   // 3. DB 에 저장한다.
+  @Transactional
   public ScheduleResponse save(String content) {
     // 2번 스케쥴을 생성
     Schedule schedule = new Schedule(content);
@@ -55,6 +60,7 @@ public class ScheduleService {
   public ScheduleResponse findById(Long id) {
     Schedule schedule = scheduleRepository.findScheduleById(id);
 
+    log.info(schedule.getCommentList().size() + "");
     return new ScheduleResponse(schedule.getId(),
             schedule.getContent(),
             schedule.getCreatedAt());
@@ -93,11 +99,12 @@ public class ScheduleService {
 //            .orElseThrow(() -> new RuntimeException("schedule not found"));
 //  }
 
+  @Transactional
   public ScheduleResponse update(Long id, String content) {
     Schedule schedule = scheduleRepository.findById(id)
             .orElseThrow();
     schedule.update(content);
-    scheduleRepository.save(schedule);
+
     return new ScheduleResponse(schedule.getId(),
             schedule.getContent(),
             schedule.getCreatedAt());

@@ -10,10 +10,16 @@
 
 package kr.spartacodingclub.demo2.entity;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * create on 2025. 5. 14. create by IntelliJ IDEA.
@@ -28,9 +34,12 @@ import java.time.LocalDateTime;
  * @since 지원하는 자바버전 (ex : 5+ 5이상)
  */
 @Getter
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Schedule {
 
-  @Setter
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   private String content;
@@ -39,6 +48,9 @@ public class Schedule {
 
   private LocalDateTime createdAt;
 
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<Comment> commentList = new ArrayList<>();
+
   public Schedule(String content) {
     this.content = content;
     this.createdAt = LocalDateTime.now();
@@ -46,5 +58,9 @@ public class Schedule {
 
   public void update(String content) {
     this.content = content;
+  }
+
+  public void addComment(Comment comment) {
+    this.commentList.add(comment);
   }
 }

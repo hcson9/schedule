@@ -11,6 +11,7 @@
 package kr.spartacodingclub.demo2.repository;
 
 import kr.spartacodingclub.demo2.entity.Comment;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,11 +28,6 @@ import java.util.Optional;
  * @see
  * @since 지원하는 자바버전 (ex : 5+ 5이상)
  */
-public interface CommentRepository {
+public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-  Comment save(Comment comment);
-
-  Optional<Comment> findById(Long id);
-
-  List<Comment> findAll();
 }

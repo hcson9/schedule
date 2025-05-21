@@ -17,6 +17,7 @@ import kr.spartacodingclub.demo2.repository.CommentRepository;
 import kr.spartacodingclub.demo2.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,17 +36,19 @@ import java.util.stream.Collectors;
  */
 @RequiredArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class CommentService {
   private final CommentRepository commentRepository;
   private final ScheduleRepository scheduleRepository;
 
   //
+  @Transactional
   public CommentResponseDto save(String content, Long scheduleId) {
     // Schedule ->
     Schedule schedule = scheduleRepository.findScheduleById(scheduleId);
 
     Comment comment = new Comment(content, schedule);
-    comment = commentRepository.save(comment);
+    schedule.addComment(comment);
     return new CommentResponseDto(comment.getId(), comment.getContent());
   }
 

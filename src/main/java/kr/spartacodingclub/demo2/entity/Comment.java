@@ -10,7 +10,10 @@
 
 package kr.spartacodingclub.demo2.entity;
 
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -26,12 +29,18 @@ import lombok.Setter;
  * @since 지원하는 자바버전 (ex : 5+ 5이상)
  */
 @Getter
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Comment {
-  @Setter
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   private String content;
 
+  @ManyToOne
+  @JoinColumn(name = "schedule_id")
   private Schedule schedule;
 
 //  public Comment(String content) {

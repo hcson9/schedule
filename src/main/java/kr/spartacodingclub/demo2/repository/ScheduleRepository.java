@@ -12,6 +12,7 @@ package kr.spartacodingclub.demo2.repository;
 
 import kr.spartacodingclub.demo2.entity.Schedule;
 import kr.spartacodingclub.demo2.exception.CustomException;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,15 +29,7 @@ import java.util.Optional;
  * @see
  * @since 지원하는 자바버전 (ex : 5+ 5이상)
  */
-public interface ScheduleRepository {
-
-  Schedule save(Schedule schedule);
-
-  Optional<Schedule> findById(Long id);
-
-  List<Schedule> findAll();
-
-  void delete(Schedule schedule);
+public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
   default Schedule findScheduleById(Long id) {
     return findById(id)
