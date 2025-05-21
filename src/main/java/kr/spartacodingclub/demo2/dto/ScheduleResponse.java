@@ -10,6 +10,7 @@
 
 package kr.spartacodingclub.demo2.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

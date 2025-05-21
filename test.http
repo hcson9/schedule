@@ -2,7 +2,7 @@ POST localhost:8080/schedules
 Content-Type: application/json
 
 {
-  "content": "안녕하세요"
+  "content1": "안녕하세요"
 }
 
 ###
@@ -30,3 +30,6 @@ Content-Type: application/json
   "content": "123",
   "scheduleId": 2
 }
+
+###
+GET localhost:8080/comments/1

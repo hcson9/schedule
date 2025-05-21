@@ -11,6 +11,7 @@
 package kr.spartacodingclub.demo2.repository;
 
 import kr.spartacodingclub.demo2.entity.Schedule;
+import kr.spartacodingclub.demo2.exception.CustomException;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +40,6 @@ public interface ScheduleRepository {
 
   default Schedule findScheduleById(Long id) {
     return findById(id)
-            .orElseThrow(() -> new RuntimeException("Schedule not found"));
+            .orElseThrow(() -> new CustomException("Schedule not found"));
   }
 }

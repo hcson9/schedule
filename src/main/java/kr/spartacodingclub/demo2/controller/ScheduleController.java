@@ -11,6 +11,7 @@
 package kr.spartacodingclub.demo2.controller;
 
 import jakarta.servlet.ServletRequest;
+import jakarta.validation.Valid;
 import kr.spartacodingclub.demo2.dto.ScheduleRequest;
 import kr.spartacodingclub.demo2.dto.ScheduleResponse;
 import kr.spartacodingclub.demo2.service.ScheduleService;
@@ -43,7 +44,7 @@ public class ScheduleController {
 
   // 등록
   @PostMapping
-  public ResponseEntity<ScheduleResponse> createSchedule(@RequestBody ScheduleRequest scheduleRequest) {
+  public ResponseEntity<ScheduleResponse> createSchedule(@RequestBody @Valid ScheduleRequest scheduleRequest) {
     ScheduleResponse response = scheduleService.save(scheduleRequest.getContent());
     return ResponseEntity.status(HttpStatus.CREATED)
             .body(response);

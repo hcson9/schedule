@@ -48,7 +48,7 @@ public class ScheduleService {
     schedule = scheduleRepository.save(schedule);
 
     return new ScheduleResponse(schedule.getId(),
-           schedule.getContent(),
+            schedule.getContent(),
             schedule.getCreatedAt());
   }
 
@@ -60,11 +60,18 @@ public class ScheduleService {
             schedule.getCreatedAt());
   }
 
+  /**
+   * <p>
+   *   전체 찾기.
+   * </p>
+   *
+   * @return 조회된 응답.
+   */
   public List<ScheduleResponse> findAll() {
-    List<Schedule> schedules = scheduleRepository.findAll();
-    List<ScheduleResponse> scheduleResponses = new ArrayList<>();
+    List<Schedule> schedules = scheduleRepository.findAll(); // 1
+    List<ScheduleResponse> scheduleResponses = new ArrayList<>(); // 1
 
-    for(Schedule schedule : schedules) {
+    for (Schedule schedule : schedules) {
       scheduleResponses.add(new ScheduleResponse(schedule.getId(),
               schedule.getContent(),
               schedule.getCreatedAt()));
@@ -88,7 +95,7 @@ public class ScheduleService {
 
   public ScheduleResponse update(Long id, String content) {
     Schedule schedule = scheduleRepository.findById(id)
-                    .orElseThrow();
+            .orElseThrow();
     schedule.update(content);
     scheduleRepository.save(schedule);
     return new ScheduleResponse(schedule.getId(),

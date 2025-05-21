@@ -16,10 +16,9 @@ import kr.spartacodingclub.demo2.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * create on 2025. 5. 19. create by IntelliJ IDEA.
@@ -44,5 +43,15 @@ public class CommentController {
     CommentResponseDto responseDto = commentService.save(requestDto.getContent(), requestDto.getScheduleId());
     return ResponseEntity.status(HttpStatus.CREATED)
             .body(responseDto);
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<CommentResponseDto> findById(@PathVariable Long id) {
+    return ResponseEntity.ok(commentService.findById(id));
+  }
+
+  @GetMapping
+  public ResponseEntity<List<CommentResponseDto>> findAll() {
+    return ResponseEntity.ok(commentService.findAll());
   }
 }

@@ -18,6 +18,9 @@ import kr.spartacodingclub.demo2.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * create on 2025. 5. 19. create by IntelliJ IDEA.
  * create by IntelliJ IDEA.
@@ -43,6 +46,20 @@ public class CommentService {
 
     Comment comment = new Comment(content, schedule);
     comment = commentRepository.save(comment);
+    return new CommentResponseDto(comment.getId(), comment.getContent());
+  }
+
+  public List<CommentResponseDto> findAll() {
+    List<Comment> comments = commentRepository.findAll();
+
+    return comments.stream()
+            .map(comment -> new CommentResponseDto(comment.getId(), comment.getContent()))
+            .collect(Collectors.toList());
+  }
+
+  public CommentResponseDto findById(Long id) {
+    Comment comment = commentRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("없습니다."));
     return new CommentResponseDto(comment.getId(), comment.getContent());
   }
 }

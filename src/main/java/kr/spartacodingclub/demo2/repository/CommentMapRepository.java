@@ -14,7 +14,9 @@ import kr.spartacodingclub.demo2.entity.Comment;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -44,5 +46,17 @@ public class CommentMapRepository implements CommentRepository {
     }
     commentMap.put(comment.getId(), comment);
     return comment;
+  }
+
+  @Override
+  public Optional<Comment> findById(Long id) {
+    return Optional.ofNullable(commentMap.get(id));
+  }
+
+  @Override
+  public List<Comment> findAll() {
+    return commentMap.values()
+            .stream()
+            .toList();
   }
 }

@@ -12,6 +12,9 @@ package kr.spartacodingclub.demo2.repository;
 
 import kr.spartacodingclub.demo2.entity.Comment;
 
+import java.util.List;
+import java.util.Optional;
+
 /**
  * create on 2025. 5. 19. create by IntelliJ IDEA.
  * create by IntelliJ IDEA.
@@ -27,4 +30,8 @@ import kr.spartacodingclub.demo2.entity.Comment;
 public interface CommentRepository {
 
   Comment save(Comment comment);
+
+  Optional<Comment> findById(Long id);
+
+  List<Comment> findAll();
 }
