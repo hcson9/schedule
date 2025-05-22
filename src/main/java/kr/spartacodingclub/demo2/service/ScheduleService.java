@@ -60,7 +60,6 @@ public class ScheduleService {
   public ScheduleResponse findById(Long id) {
     Schedule schedule = scheduleRepository.findScheduleById(id);
 
-    log.info(schedule.getCommentList().size() + "");
     return new ScheduleResponse(schedule.getId(),
             schedule.getContent(),
             schedule.getCreatedAt());
