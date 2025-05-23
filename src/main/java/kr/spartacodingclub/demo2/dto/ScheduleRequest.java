@@ -36,4 +36,8 @@ public class ScheduleRequest {
   @NotEmpty
   private String content;
 
+
+  public ScheduleRequest(String content) {
+    this.content = content;
+  }
 }
